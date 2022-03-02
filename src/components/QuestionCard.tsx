@@ -21,22 +21,24 @@ const QuestionCard: React.FC<Props> = ({
 }) => {
   return (
     <div className="card-question">
-      <h1>
+      <h2>
         Question {questionNum} / {totalQuestions}
-      </h1>
+      </h2>
       <p>{question}</p>
       {answers.map((answer) => (
         <button
-          disabled={userAnswer ? true : false}
           key={answer}
           value={answer}
+          disabled={userAnswer ? true : false}
           onClick={callback}
           className={
-            userAnswer?.answer === answer
-              ? 'user-clicked'
-              : userAnswer?.correctAnswer === answer
+            userAnswer?.correctAnswer === answer
               ? 'correct-answer'
-              : ''
+              : userAnswer?.answer === answer && userAnswer?.correctAnswer === answer
+              ? 'correct-answer'
+              : userAnswer?.answer !== userAnswer?.correctAnswer && userAnswer?.answer === answer
+              ? 'incorrect-answer'
+              : undefined
           }
         >
           {answer}
